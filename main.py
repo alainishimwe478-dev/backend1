@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 from models import Base
 from routes.users import router as users_router
@@ -8,6 +9,15 @@ from routes.admin import router as admin_router
 app = FastAPI(title="RSSB HealthPay API")
 
 Base.metadata.create_all(bind=engine)
+
+# Allow CORS from all origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(users_router)
 app.include_router(payments_router)
