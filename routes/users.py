@@ -11,7 +11,6 @@ router = APIRouter(prefix="/users", tags=["Users"])
 class SignupRequest(BaseModel):
     full_name: str
     email: str
-    phone: str
     password: str
 
 
@@ -35,15 +34,10 @@ def signup(request: SignupRequest, db: Session=Depends(get_db)):
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    existing_phone = db.query(User).filter(User.phone == request.phone).first()
-    if existing_phone:
-        raise HTTPException(status_code=400, detail="Phone number already registered")
-
     hashed_password = hash_password(request.password)
     user = User(
         full_name=request.full_name,
         email=request.email,
-        phone=request.phone,
         password=hashed_password
     )
     db.add(user)

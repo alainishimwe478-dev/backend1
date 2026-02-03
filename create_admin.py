@@ -15,7 +15,6 @@ else:
     admin = User(
         full_name="Admin User",
         email="admin@gmail.com",
-        phone="1234567890",
         password=hashed_password,
         role="admin"
     )
