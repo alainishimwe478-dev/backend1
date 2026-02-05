@@ -39,3 +39,16 @@ class Claim(Base):
     amount = Column(Float)
     aiRisk = Column(String)  # LOW / MEDIUM / HIGH
     createdAt = Column(DateTime, default=datetime.utcnow)
+
+
+class Symptons(Base):
+    __tablename__ = "symptons"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    symptoms = Column(String, nullable=False)
+    activity_level = Column(String)
+    note = Column(String)
+    # `time` stores a timestamp (when the symptom was recorded)
+    time = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.utcnow)
